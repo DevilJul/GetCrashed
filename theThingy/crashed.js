@@ -1,17 +1,41 @@
 COBI.init('this will all end in tears');
 
 function crash() {
-    setCrashed();
+    showCrashScreen();
     countDownStopCall();
 }
 
-function setCrashed() {
-    let elem = document.getElementById("txtSimCrash");
-    if (elem.style.display === "none") {
-        elem.style.display = "block";
-    } else {
-        elem.style.display = "none";
-    }
+function showCrashScreen() {
+    document.getElementById("screen_crash").style.display = 'block';
+    document.getElementById("screen_cycler").style.display = 'none';
+    document.getElementById("screen_notification").style.display = 'none';
+}
+
+function hideCrashScreen() {
+    document.getElementById("screen_crash").style.display = 'none';
+    document.getElementById("screen_cycler").style.display = 'block';
+    document.getElementById("screen_notification").style.display = 'none';
+
+    resetInterval();
+}
+
+function emergencyCall() {
+    sendSms();
+
+    resetInterval();
+
+    document.getElementById("screen_crash").style.display = 'none';
+    document.getElementById("screen_cycler").style.display = 'none';
+    document.getElementById("screen_notification").style.display = 'block';
+
+    document.getElementById('emergency_notes').innerHTML = 'time: ' + new Date() +
+        ', coordinates: ' + navigator.geolocation.getCurrentPosition(function (pos) {
+            return pos.coords.longitude + ", " + pos.coords.latitude;
+        });
+}
+
+function resetInterval() {
+    document.getElementById("progressStop").value = 360;
 }
 
 function sendSms() {
@@ -28,12 +52,12 @@ function sendSms() {
 
 function countDownStopCall() {
     let elem = document.getElementById("progressStop");
-
-    var downloadTimer = setInterval(function(){
+    elem.style.display  = 'block';
+    let downloadTimer = setInterval(function(){
         elem.value --;
         if(elem.value <= 0) {
             clearInterval(downloadTimer);
-            sendSms();
+            emergencyCall();
         }
     },1000);
 }
@@ -59,9 +83,6 @@ const crashTimeInMsec = 3000;
 
 const titltedThreshold = 4;
 
-function deviceOrientationHandler() {
-
-}
 
 function updateStability(x, y, z) {
 
@@ -122,9 +143,8 @@ function deviceMotionHandler(e) {
 }
 
 function crashDetected() {
-
-    document.getElementById('fancycrash').innerHTML = '<img src="crash_img.jpg" />';
-
+    showCrashScreen();
+    countDownStopCall();
 }
 
 function isTilted() {
@@ -174,6 +194,8 @@ function init() {
     } else {
         console.log('crash detection is not supported')
     }
+
+    //document.getElementById('break_emergency').addEventListener('click', hideCrashScreen);
 }
 
 init();

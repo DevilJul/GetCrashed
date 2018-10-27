@@ -51,9 +51,28 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1 id="txtSimCrash" style="display: none">You Fucktard crashed!</h1>
-<input id="btnSimCrash" type="button" value="Sim Crash" onclick="crash()">
-<progress id="progressStop" value="360" max="360"></progress>
+
+<div id="screen_cycler">
+    <h1>Happy cycling</h1>
+    <img src="img/cycler_animated.gif" />
+</div>
+
+<div id="screen_crash" style="display:none;">
+    <img src="img/crash.jpg" />
+    <button id="break_emergency" onclick="hideCrashScreen()">Break emergency notification</button>
+    <progress id="progressStop" value="360" max="360" style="display: none"></progress>
+    <button id="call_emergency" onclick="emergencyCall()" >Call emergency now</button>
+</div>
+
+<div id="screen_notification" style="display: none">
+    <h1>Notify emergency contact</h1>
+    <i>Send message to 110: <div id="emergency_notes"></div> </i>
+</div>
+
+<!--<h1 id="txtSimCrash" style="display: none">You Fucktard crashed!</h1>
+<input id="btnSimCrash" type="button" value="Sim Crash" onclick="crash()">-->
+
+
 <div id="fancycrash">
 </div>
 
