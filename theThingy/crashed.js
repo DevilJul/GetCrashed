@@ -1,0 +1,1 @@
+COBI.init('this will all end in tears');
