@@ -6,6 +6,7 @@
     <script src="cobi.js"></script>
     <script src="crashed.js"></script>
     <script src="Tinkerforge.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
     <script>
         let HOST = '172.16.1.104';
         let PORT = 4280;
@@ -23,12 +24,6 @@
 
         ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
             function (connectReason) {
-                // Configure two servos with voltage 5.5V
-                // Servo 1: Connected to port 0, period of 19.5ms, pulse width of 1 to 2ms
-                //          and operating angle -100 to 100°
-                //
-                // Servo 2: Connected to port 5, period of 20ms, pulse width of 0.95
-                //          to 1.95ms and operating angle -90 to 90°
                 servo.setOutputVoltage(5500);
 
                 servo.setDegree(0, -10000, 10000);
@@ -55,7 +50,7 @@
 </head>
 <body>
 <h1 id="txtSimCrash" style="display: none">You Fucktard crashed!</h1>
-<input id="btnSimCrash" type="button" value="Sim Crash" onclick="setCrashed()">
-<progress value="66" max="100"></progress>
+<input id="btnSimCrash" type="button" value="Sim Crash" onclick="crash()">
+<progress id="progressStop" value="360" max="360"></progress>
 </body>
 </html>
