@@ -39,8 +39,8 @@ function resetInterval() {
 
 function sendSms() {
     $.ajax({
-        url: 'https://rest.nexmo.com/sms/json',
-        data:'api_key=e8901200\r\napi_secret=R27HlB3Bm3hYcOU1\r\nto=491726003723\r\nfrom="NEXMO"\r\ntext="Hello from Nexmo"',
+        url: '/',
+        data:'geolocation',
         success: function(data){
             alert(data);
             console.log("shits been done")
