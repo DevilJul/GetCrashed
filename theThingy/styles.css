@@ -1,3 +1,7 @@
+body {
+    margin: 0px !important;
+}
+
 h1 {
     text-align: center;
     color: green;
@@ -42,4 +46,8 @@ progress[value]::-webkit-progress-bar {
         animation: animate-stripes 5s linear infinite;
     }
 
+}
+
+#screen_crash #screen_cycler #screen_notification {
+    width: 100%;
 }
