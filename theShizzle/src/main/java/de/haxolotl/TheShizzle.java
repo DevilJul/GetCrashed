@@ -26,7 +26,8 @@ public class TheShizzle {
 		int port = 8080;
 		String host = "localhost";
 		if (args.length < 4 || args.length > 6) {
-			System.err.println("Use program arguments: <apiKey> <apiSecret> <telnumber> <enableSms|disableSms> [<host>] [<port>]");
+			System.err.println(
+					"Use program arguments: <apiKey> <apiSecret> <telnumber> <enableSms|disableSms> [<host>] [<port>]");
 			System.exit(1);
 		}
 
@@ -67,6 +68,8 @@ public class TheShizzle {
 
 							if (enableSms) {
 								sendSms(apiKey, apiSecret, telnumber, request);
+							} else {
+								System.out.println("do not send sms to: " + telnumber + " / " + request);
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
