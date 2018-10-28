@@ -52,22 +52,25 @@
 </head>
 <body>
 
-<div id="screen_cycler">
-    <h1>Happy cycling</h1>
-    <img src="img/cycler_animated.gif" />
+<div id="screen_cycler" style="width: 100%; height: 100%">
+    <img src="img/screen_cycle_01.jpg" />
 </div>
 
-<div id="screen_crash" style="display:none;">
-    <img src="img/crash.jpg" />
-    <button id="break_emergency" onclick="hideCrashScreen()">Break emergency notification</button>
+<div id="screen_crash" style="display:none; top: 0">
+    <img src="img/screen_crash_01.jpg" />
+    <div id="countdown"></div>
+
+    <div id="press_emergency" onclick="alert('Sending emergency message...')" style="position:fixed; top: 0; width: 30%; height: 100%;"></div>
+    <div id="press_cancel" onclick="hideCrashScreen()" style="position:fixed; width: 30%; height: 100%; top: 0; left: 50%;"></div>
+    <!--<button id="break_emergency" onclick="hideCrashScreen()">Break emergency notification</button>
     <progress id="progressStop" value="360" max="360" style="display: none"></progress>
-    <button id="call_emergency" onclick="emergencyCall()" >Call emergency now</button>
+    <button id="call_emergency" onclick="emergencyCall()" >Call emergency now</button>-->
 </div>
 
-<div id="screen_notification" style="display: none">
-    <h1>Notify emergency contact</h1>
-    <i>Send message to 110: <div id="emergency_notes"></div> </i>
+<div id="screen_notification" style="display: none; width: 100%; height: 100%">
+    <img src="img/screen_emergency_01.jpg" />
 </div>
+
 
 <!--<h1 id="txtSimCrash" style="display: none">You Fucktard crashed!</h1>
 <input id="btnSimCrash" type="button" value="Sim Crash" onclick="crash()">-->
