@@ -56,15 +56,15 @@
     <img src="img/screen_cycle_01.jpg" />
 </div>
 
-<div id="screen_crash" style="display:none; top: 0">
+<div id="screen_crash" style="display:none; top: 0; width: 100%; height: 100%">
     <img src="img/screen_crash_01.jpg" />
     <div id="countdown"></div>
 
-    <div id="press_emergency" onclick="alert('Sending emergency message...')" style="position:fixed; top: 0; width: 30%; height: 100%;"></div>
+    <div id="press_emergency" onclick="emergencyCall()" style="position:fixed; top: 0; width: 30%; height: 100%;"></div>
     <div id="press_cancel" onclick="hideCrashScreen()" style="position:fixed; width: 30%; height: 100%; top: 0; left: 50%;"></div>
-    <!--<button id="break_emergency" onclick="hideCrashScreen()">Break emergency notification</button>
+    <!--<button id="break_emergency" onclick="hideCrashScreen()">Break emergency notification</button>-->
     <progress id="progressStop" value="360" max="360" style="display: none"></progress>
-    <button id="call_emergency" onclick="emergencyCall()" >Call emergency now</button>-->
+    <!--<button id="call_emergency" onclick="emergencyCall()" >Call emergency now</button>-->
 </div>
 
 <div id="screen_notification" style="display: none; width: 100%; height: 100%">

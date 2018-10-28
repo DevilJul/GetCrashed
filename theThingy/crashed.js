@@ -1,13 +1,5 @@
 COBI.init('this will all end in tears');
 
-let countDown = 1000;
-
-function crash() {
-    showCrashScreen();
-    //countDownStopCall();
-    //countDownEmergency();
-}
-
 function showCrashScreen() {
     document.getElementById("screen_crash").style.display = 'block';
     document.getElementById("screen_cycler").style.display = 'none';
@@ -19,7 +11,7 @@ function hideCrashScreen() {
     document.getElementById("screen_cycler").style.display = 'block';
     document.getElementById("screen_notification").style.display = 'none';
 
-    //resetInterval();
+    resetInterval();
 }
 
 function showEmergencyScreen() {
@@ -29,21 +21,11 @@ function showEmergencyScreen() {
 }
 
 function emergencyCall() {
-    //sendSms();
+    sendSms();
 
-    //resetInterval();
+    resetInterval();
 
-
-    document.getElementById("screen_crash").style.display = 'none';
-    document.getElementById("screen_cycler").style.display = 'none';
-    document.getElementById("screen_notification").style.display = 'block';
-
-    //navigator.geolocation.getCurrentPosition(setEmergencyMessage);
-}
-
-function setEmergencyMessage(pos) {
-    document.getElementById('emergency_notes').innerHTML = 'time: ' + new Date() +
-        ', coordinates: ' ; //+ pos.coords.longitude + ", " + pos.coords.latitude;
+    showEmergencyScreen();
 }
 
 function resetInterval() {
@@ -62,18 +44,6 @@ function sendSms() {
     })
 }
 
-function countDownEmergency() {
-    let elem = document.getElementById("countdown");
-    elem.style.display  = 'block';
-    let downloadTimer = setInterval(function(){
-        elem.innerHTML = countDown;
-        countDown--;
-        if(elem.value <= 0) {
-            countDown = 1000;
-            emergencyCall();
-        }
-    },1000);
-}
 
 function countDownStopCall() {
     let elem = document.getElementById("progressStop");
@@ -169,7 +139,7 @@ function deviceMotionHandler(e) {
 
 function crashDetected() {
     showCrashScreen();
-    //countDownStopCall();
+    countDownStopCall();
 }
 
 function isTilted() {
