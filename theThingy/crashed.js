@@ -1,5 +1,7 @@
 COBI.init('this will all end in tears');
 
+let downloadTimer;
+
 function showCrashScreen() {
     document.getElementById("screen_crash").style.display = 'block';
     document.getElementById("screen_cycler").style.display = 'none';
@@ -10,6 +12,8 @@ function hideCrashScreen() {
     document.getElementById("screen_crash").style.display = 'none';
     document.getElementById("screen_cycler").style.display = 'block';
     document.getElementById("screen_notification").style.display = 'none';
+
+    cyclerIsOk = true;
 
     resetInterval();
 }
@@ -29,6 +33,7 @@ function emergencyCall() {
 }
 
 function resetInterval() {
+    clearInterval(downloadTimer);
     document.getElementById("progressStop").value = 360;
 }
 
@@ -48,11 +53,12 @@ function sendSms() {
 function countDownStopCall() {
     let elem = document.getElementById("progressStop");
     elem.style.display  = 'block';
-    let downloadTimer = setInterval(function(){
+    downloadTimer = setInterval(function(){
         elem.value --;
         if(elem.value <= 0) {
-            clearInterval(downloadTimer);
-            emergencyCall();
+            if (!cyclerIsOk) {
+            	emergencyCall();
+            }
         }
     },1000);
 }
@@ -77,7 +83,7 @@ let lastPossibleCrashTstamp;
 const crashTimeInMsec = 3000;
 
 const titltedThreshold = 4;
-
+let cyclerIsOk = true;
 
 function updateStability(x, y, z) {
 
@@ -96,7 +102,6 @@ function updateStability(x, y, z) {
     if (stability > thresholdStabilityCrash) {
         lastPossibleCrashTstamp = Date.now();
         if (log) document.getElementById('lastPossibleCrashTstamp').innerHTML = '' + lastPossibleCrashTstamp;
-
         setTimeout(isCrash, crashTimeInMsec);
     }
 }
@@ -138,6 +143,8 @@ function deviceMotionHandler(e) {
 }
 
 function crashDetected() {
+    cyclerIsOk = false;
+
     showCrashScreen();
     countDownStopCall();
 }
