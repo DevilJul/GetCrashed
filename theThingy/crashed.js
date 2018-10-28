@@ -8,6 +8,10 @@ function showCrashScreen() {
     document.getElementById("screen_notification").style.display = 'none';
 }
 
+function switchBatteryState() {
+    COBI.__receiveMessage({action: 'NOTIFY', path: 'battery/state', payload: {batteryLevel: 20, state: "CHARGING"}})
+}
+
 function hideCrashScreen() {
     document.getElementById("screen_crash").style.display = 'none';
     document.getElementById("screen_cycler").style.display = 'block';
@@ -40,8 +44,8 @@ function resetInterval() {
 function sendSms() {
     $.ajax({
         url: '/',
-        data:'geolocation',
-        success: function(data){
+        data: 'geolocation',
+        success: function (data) {
             alert(data);
             console.log("shits been done")
             //process the JSON data etc
@@ -52,16 +56,58 @@ function sendSms() {
 
 function countDownStopCall() {
     let elem = document.getElementById("progressStop");
-    elem.style.display  = 'block';
-    downloadTimer = setInterval(function(){
-        elem.value --;
-        if(elem.value <= 0) {
+    elem.style.display = 'block';
+    downloadTimer = setInterval(function () {
+        elem.value--;
+        if (elem.value <= 0) {
             if (!cyclerIsOk) {
-            	emergencyCall();
+                emergencyCall();
             }
         }
-    },1000);
+    }, 1000);
 }
+
+let HOST = '172.16.1.104';
+let PORT = 4280;
+let UID = '6QGaJa'; // Change XXYYZZ to the UID of your Servo Brick
+const vertical = 9000;
+const horizontal = -6816;
+let orientation = vertical;
+
+function moveMotor() {
+    if (orientation === vertical) {
+        orientation = horizontal;
+    } else {
+        orientation = vertical;
+    }
+
+    let ipcon = new Tinkerforge.IPConnection(); // Create IP connection
+    let servo = new Tinkerforge.BrickServo(UID, ipcon); // Create device object
+
+    ipcon.connect(HOST, PORT,
+        function (error) {
+            console.log('Error: ' + error);
+        }
+    ); // Connect to brickd
+    // Don't use device before ipcon is connected
+    ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
+        function (connectReason) {
+            servo.setOutputVoltage(5500);
+
+            servo.setDegree(0, -9000, 9000);
+            servo.setPulseWidth(0, 1000, 2000);
+            servo.setPeriod(0, 19500);
+            servo.setAcceleration(0, 65535); // Slow acceleration
+            servo.setVelocity(0, 65535); // Full speed
+
+            servo.enable(0);
+            servo.setPosition(0, orientation);
+
+            ipcon.disconnect();
+        }
+    );
+}
+
 const log = false;
 
 let timeStampStart = Date.now();
@@ -71,7 +117,7 @@ const maxAmountSamples = 10;
 let stabilitySamples = [];
 let stability = 0;
 
-let sampleLast = {x: 0, y: 0, z: 0, gx: 0, gy: 0, gz: 0 };
+let sampleLast = {x: 0, y: 0, z: 0, gx: 0, gy: 0, gz: 0};
 let samplesTaken = 0;
 let samplingRate = 0; // samples per 1s
 let samplingTestTime = 1000;
